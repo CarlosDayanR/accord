@@ -1,0 +1,48 @@
+
+> accord@0.1.0 build
+> next build
+
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 10.8s
+  Running TypeScript ...
+  Finished TypeScript in 10.1s ...
+  Collecting page data using 3 workers ...
+Error [PrismaClientInitializationError]: `PrismaClient` needs to be constructed with a non-empty, valid `PrismaClientOptions`:
+
+```
+new PrismaClient({
+  ...
+})
+```
+
+or
+
+```
+constructor() {
+  super({ ... });
+}
+```
+          
+    at new I (C:\laragon\www\accord\.next\server\chunks\[root-of-the-server]__0gzws8v._.js:67:2070)
+    at module evaluation (C:\laragon\www\accord\.next\server\chunks\[root-of-the-server]__0gzws8v._.js:74:4897121)
+    at instantiateModule (C:\laragon\www\accord\.next\server\chunks\[turbopack]_runtime.js:853:9)
+    at getOrInstantiateModuleFromParent (C:\laragon\www\accord\.next\server\chunks\[turbopack]_runtime.js:877:12)
+    at Context.esmImport [as i] (C:\laragon\www\accord\.next\server\chunks\[turbopack]_runtime.js:281:20)
+    at module evaluation (C:\laragon\www\accord\.next\server\chunks\[root-of-the-server]__03m7ov_._.js:1:1399)
+    at instantiateModule (C:\laragon\www\accord\.next\server\chunks\[turbopack]_runtime.js:853:9)
+    at instantiateRuntimeModule (C:\laragon\www\accord\.next\server\chunks\[turbopack]_runtime.js:882:12)
+    at getOrInstantiateRuntimeModule (C:\laragon\www\accord\.next\server\chunks\[turbopack]_runtime.js:895:12)
+    at Object.m (C:\laragon\www\accord\.next\server\chunks\[turbopack]_runtime.js:898:18) {
+  clientVersion: '7.5.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+
+> Build error occurred
+Error: Failed to collect page data for /api/register
+    at ignore-listed frames {
+  type: 'Error'
+}

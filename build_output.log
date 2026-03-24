@@ -1,0 +1,27 @@
+
+> accord@0.1.0 build
+> next build
+
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 13.2s
+  Running TypeScript ...
+  Finished TypeScript in 9.6s ...
+  Collecting page data using 3 workers ...
+Error [PrismaClientConstructorValidationError]: Using engine type "client" requires either "adapter" or "accelerateUrl" to be provided to PrismaClient constructor.
+Read more at https://pris.ly/d/client-constructor
+    at module evaluation (C:\laragon\www\accord\.next\server\chunks\[root-of-the-server]__0s8iz-m._.js:1:62281)
+    at instantiateModule (C:\laragon\www\accord\.next\server\chunks\[turbopack]_runtime.js:853:9)
+    at getOrInstantiateModuleFromParent (C:\laragon\www\accord\.next\server\chunks\[turbopack]_runtime.js:877:12)
+    at Context.esmImport [as i] (C:\laragon\www\accord\.next\server\chunks\[turbopack]_runtime.js:281:20)
+    at module evaluation (C:\laragon\www\accord\.next\server\chunks\[root-of-the-server]__0a64_-7._.js:1:1267)
+    at instantiateModule (C:\laragon\www\accord\.next\server\chunks\[turbopack]_runtime.js:853:9)
+    at instantiateRuntimeModule (C:\laragon\www\accord\.next\server\chunks\[turbopack]_runtime.js:882:12)
+
+> Build error occurred
+Error: Failed to collect page data for /api/register
+    at ignore-listed frames {
+  type: 'Error'
+}
