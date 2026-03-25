@@ -30,7 +30,7 @@ export default function LoginPage() {
         setError("Correo o contraseña incorrectos.");
         setLoading(false);
       } else {
-        router.push("/");
+        router.push("/dashboard");
       }
     } catch {
       setError("Ocurrió un error inesperado.");
@@ -60,6 +60,7 @@ export default function LoginPage() {
 
         {/* Card */}
         <form
+          method="POST"
           onSubmit={handleSubmit}
           className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-8 backdrop-blur-sm space-y-5"
         >

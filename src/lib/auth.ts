@@ -12,6 +12,7 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+        console.log("Authorize attempt for:", credentials?.email);
         if (!credentials?.email || !credentials?.password) {
           return null;
         }
@@ -30,8 +31,11 @@ export const authOptions: NextAuthOptions = {
         );
 
         if (!isPasswordValid) {
+          console.log("Invalid password for:", credentials.email);
           return null;
         }
+
+        console.log("User authorized:", user.email);
 
         return {
           id: String(user.id),
@@ -48,12 +52,14 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        console.log("JWT callback - user logged in:", user.email);
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
         (session.user as { id?: string }).id = token.id as string;
+        console.log("Session callback for user ID:", token.id);
       }
       return session;
     },

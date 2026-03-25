@@ -1,6 +1,10 @@
 import Link from "next/link";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
 
-export default function Home() {
+export default async function Home() {
+  const session = await getServerSession(authOptions);
+
   return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-center px-4 relative overflow-hidden">
       {/* Background glow effects */}
@@ -35,18 +39,29 @@ export default function Home() {
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-          <Link
-            href="/register"
-            className="w-full sm:w-auto bg-white text-black font-semibold rounded-lg px-8 py-3 text-sm hover:bg-gray-200 active:scale-[0.98] transition-all duration-150 inline-block text-center"
-          >
-            Registrar mi Negocio
-          </Link>
-          <Link
-            href="/login"
-            className="w-full sm:w-auto bg-white/[0.04] border border-white/[0.08] text-white font-medium rounded-lg px-8 py-3 text-sm hover:bg-white/[0.08] hover:border-white/[0.15] active:scale-[0.98] transition-all duration-150 inline-block text-center"
-          >
-            Iniciar Sesión
-          </Link>
+          {session ? (
+            <Link
+              href="/dashboard"
+              className="w-full sm:w-auto bg-white text-black font-semibold rounded-lg px-12 py-3 text-sm hover:bg-gray-200 active:scale-[0.98] transition-all duration-150 inline-block text-center shadow-[0_0_20px_rgba(255,255,255,0.15)]"
+            >
+              Ir al Dashboard
+            </Link>
+          ) : (
+            <>
+              <Link
+                href="/register"
+                className="w-full sm:w-auto bg-white text-black font-semibold rounded-lg px-8 py-3 text-sm hover:bg-gray-200 active:scale-[0.98] transition-all duration-150 inline-block text-center"
+              >
+                Registrar mi Negocio
+              </Link>
+              <Link
+                href="/login"
+                className="w-full sm:w-auto bg-white/[0.04] border border-white/[0.08] text-white font-medium rounded-lg px-8 py-3 text-sm hover:bg-white/[0.08] hover:border-white/[0.15] active:scale-[0.98] transition-all duration-150 inline-block text-center"
+              >
+                Iniciar Sesión
+              </Link>
+            </>
+          )}
         </div>
       </div>
 
