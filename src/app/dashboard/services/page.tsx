@@ -42,8 +42,11 @@ export default function ServicesPage() {
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type } = e.target;
+    setFormData((prev) => ({ 
+      ...prev, 
+      [name]: type === "number" ? value.replace(/^0+/, "") : value 
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
