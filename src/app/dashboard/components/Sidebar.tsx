@@ -13,6 +13,7 @@ export default function Sidebar({ userName }: SidebarProps) {
 
   const navItems = [
     { name: "Inicio", href: "/dashboard" },
+    { name: "Citas", href: "/dashboard/appointments" },
     { name: "Servicios", href: "/dashboard/services" },
     { name: "Horarios", href: "/dashboard/hours" },
     { name: "Configuración", href: "/dashboard/settings" },
