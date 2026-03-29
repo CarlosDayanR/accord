@@ -26,6 +26,8 @@ export default function BusinessRegistrationForm({ categories }: BusinessRegistr
     name: "",
     slug: "",
     phone: "",
+    address: "",
+    description: "",
     theme_palette: "classic_dark",
     policies: "",
     subcategory_id: "",
@@ -110,7 +112,7 @@ export default function BusinessRegistrationForm({ categories }: BusinessRegistr
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label htmlFor="phone" className="text-sm font-medium text-zinc-300">Teléfono</label>
+            <label htmlFor="phone" className="text-sm font-medium text-zinc-300">Teléfono del Negocio</label>
             <input
               type="tel"
               id="phone"
@@ -118,11 +120,40 @@ export default function BusinessRegistrationForm({ categories }: BusinessRegistr
               required
               value={formData.phone}
               onChange={handleChange}
-              className="w-full px-4 py-2 bg-zinc-950 border border-zinc-800 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/10 transition-all"
+              className="w-full px-4 py-2 bg-zinc-950 border border-zinc-800 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/10 transition-all placeholder:text-zinc-600"
               placeholder="+52 ..."
             />
           </div>
 
+          <div className="space-y-2">
+            <label htmlFor="address" className="text-sm font-medium text-zinc-300">Dirección</label>
+            <input
+              type="text"
+              id="address"
+              name="address"
+              required
+              value={formData.address}
+              onChange={handleChange}
+              className="w-full px-4 py-2 bg-zinc-950 border border-zinc-800 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/10 transition-all placeholder:text-zinc-600"
+              placeholder="Ej: Av. Principal 123"
+            />
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <label htmlFor="description" className="text-sm font-medium text-zinc-300">Descripción del Negocio</label>
+          <textarea
+            id="description"
+            name="description"
+            rows={3}
+            value={formData.description}
+            onChange={handleChange}
+            className="w-full px-4 py-2 bg-zinc-950 border border-zinc-800 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/10 transition-all resize-none placeholder:text-zinc-600"
+            placeholder="Cuenta un poco sobre lo que haces..."
+          />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
             <label htmlFor="subcategory_id" className="text-sm font-medium text-zinc-300">Categoría del Negocio</label>
             <select
@@ -145,22 +176,22 @@ export default function BusinessRegistrationForm({ categories }: BusinessRegistr
               ))}
             </select>
           </div>
-        </div>
 
-        <div className="space-y-2">
-          <label htmlFor="theme_palette" className="text-sm font-medium text-zinc-300">Paleta de Colores</label>
-          <select
-            id="theme_palette"
-            name="theme_palette"
-            value={formData.theme_palette}
-            onChange={handleChange}
-            className="w-full px-4 py-2 bg-zinc-950 border border-zinc-800 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/10 transition-all"
-          >
-            <option value="classic_dark">Premium Dark (Negro y Gris)</option>
-            <option value="deep_ocean">Deep Ocean (Azul Marino)</option>
-            <option value="forest_night">Forest Night (Verde Esmeralda Oscuro)</option>
-            <option value="royal_gold">Royal Gold (Dorado sobre Negro)</option>
-          </select>
+          <div className="space-y-2">
+            <label htmlFor="theme_palette" className="text-sm font-medium text-zinc-300">Paleta de Colores</label>
+            <select
+              id="theme_palette"
+              name="theme_palette"
+              value={formData.theme_palette}
+              onChange={handleChange}
+              className="w-full px-4 py-2 bg-zinc-950 border border-zinc-800 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/10 transition-all"
+            >
+              <option value="classic_dark">Premium Dark (Negro y Gris)</option>
+              <option value="deep_ocean">Deep Ocean (Azul Marino)</option>
+              <option value="forest_night">Forest Night (Verde Esmeralda Oscuro)</option>
+              <option value="royal_gold">Royal Gold (Dorado sobre Negro)</option>
+            </select>
+          </div>
         </div>
 
         <div className="space-y-2">

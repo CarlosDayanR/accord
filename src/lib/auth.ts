@@ -39,7 +39,7 @@ export const authOptions: NextAuthOptions = {
 
         return {
           id: String(user.id),
-          name: user.name,
+          name: `${user.firstName} ${user.lastName}`.trim(),
           email: user.email,
         };
       },

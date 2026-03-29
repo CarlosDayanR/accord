@@ -7,10 +7,10 @@ export const dynamic = "force-dynamic";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, email, password } = body;
+    const { firstName, lastName, email, password } = body;
     console.log("Registration attempt for:", email);
 
-    if (!name || !email || !password) {
+    if (!firstName || !lastName || !email || !password) {
       return NextResponse.json(
         { error: "Todos los campos son obligatorios." },
         { status: 400 }
@@ -35,7 +35,8 @@ export async function POST(request: Request) {
     // Create user
     const user = await prisma.users.create({
       data: {
-        name,
+        firstName,
+        lastName,
         email,
         password_hash: passwordHash,
       },

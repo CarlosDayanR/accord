@@ -18,10 +18,10 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { name, slug, phone, theme_palette, policies, subcategory_id } = body;
+    const { name, slug, phone, address, description, theme_palette, policies, subcategory_id } = body;
 
     // Basic validation
-    if (!name || !slug || !phone || !subcategory_id) {
+    if (!name || !slug || !phone || !address || !subcategory_id) {
       return NextResponse.json(
         { error: "Faltan campos obligatorios." },
         { status: 400 }
@@ -61,6 +61,8 @@ export async function POST(request: Request) {
         name,
         slug: slug.toLowerCase(),
         phone,
+        address,
+        description: description || null,
         theme_palette: theme_palette || "classic_light",
         policies: policies || "",
       },
