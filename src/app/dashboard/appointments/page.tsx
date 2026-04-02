@@ -65,10 +65,17 @@ export default function AppointmentsPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
     setError(null);
 
     const fullDatetime = `${formData.appointment_date}T${formData.appointment_time}:00`;
+    const selectedDate = new Date(fullDatetime);
+    const now = new Date();
+
+    if (selectedDate < now) {
+      setError("La fecha y hora de la cita no pueden ser en el pasado.");
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
       const res = await fetch("/api/appointments", {
@@ -100,6 +107,28 @@ export default function AppointmentsPage() {
       setError(err.message);
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleStatusUpdate = async (id: number, newStatus: string) => {
+    try {
+      const res = await fetch(`/api/appointments/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Error al actualizar el estado.");
+      }
+
+      // Update local state
+      setAppointments(prev => 
+        prev.map(appt => appt.id === id ? { ...appt, status: newStatus } : appt)
+      );
+    } catch (err: any) {
+      alert(err.message);
     }
   };
 
@@ -252,13 +281,21 @@ export default function AppointmentsPage() {
                           </span>
                         </td>
                         <td className="px-6 py-4">
-                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                            appt.status === "completed" ? "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20" :
-                            appt.status === "cancelled" ? "bg-red-500/10 text-red-500 border border-red-500/20" :
-                            "bg-blue-500/10 text-blue-500 border border-blue-500/20"
-                          }`}>
-                            {appt.status}
-                          </span>
+                          <select
+                            value={appt.status}
+                            onChange={(e) => handleStatusUpdate(appt.id, e.target.value)}
+                            className={`px-2 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider bg-black border outline-none transition-colors cursor-pointer ${
+                              appt.status === "completed" ? "text-emerald-500 border-emerald-500/20 hover:border-emerald-500/40" :
+                              appt.status === "cancelled" ? "text-red-500 border-red-500/20 hover:border-red-500/40" :
+                              appt.status === "approved" ? "text-blue-500 border-blue-500/20 hover:border-blue-500/40" :
+                              "text-amber-500 border-amber-500/20 hover:border-amber-500/40"
+                            }`}
+                          >
+                            <option value="pending">PENDING</option>
+                            <option value="approved">APPROVED</option>
+                            <option value="completed">COMPLETED</option>
+                            <option value="cancelled">CANCELLED</option>
+                          </select>
                         </td>
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-3">

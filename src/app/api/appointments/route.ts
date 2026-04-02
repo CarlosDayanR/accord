@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { validateAppointment } from "@/lib/appointment-validation";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -59,15 +60,27 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Faltan datos obligatorios" }, { status: 400 });
     }
 
+    // ─── Golden Rules Validation ─────────────────────────────
+    const selectedDate = new Date(appointment_datetime);
+    const validation = await validateAppointment(
+      business.id,
+      Number(service_id),
+      selectedDate
+    );
+
+    if (!validation.valid) {
+      return NextResponse.json({ error: validation.error }, { status: 400 });
+    }
+
     const appointment = await prisma.appointments.create({
       data: {
         business_id: business.id,
         service_id: Number(service_id),
         client_name,
         client_phone: client_phone || null,
-        appointment_datetime: new Date(appointment_datetime),
+        appointment_datetime: selectedDate,
         source: "manual",
-        status: "approved", // Manual appointments are usually approved immediately
+        status: "approved",
       },
       include: {
         services: true,
