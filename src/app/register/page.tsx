@@ -55,21 +55,21 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center px-4">
+    <div className="min-h-screen bg-bg-surface flex items-center justify-center px-4">
       {/* Subtle radial glow behind the card */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="w-[600px] h-[600px] bg-white/[0.02] rounded-full blur-3xl" />
+        <div className="w-[600px] h-[600px] bg-brand-blue/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="relative w-full max-w-md">
+      <div className="relative w-full max-w-md z-10 animate-fade-in">
         {/* Brand */}
         <div className="text-center mb-10">
           <Link href="/" className="inline-block">
-            <h1 className="text-3xl font-bold text-white tracking-tighter hover:opacity-80 transition-opacity">
+            <h1 className="text-3xl font-bold text-brand-blue tracking-tighter hover:opacity-80 transition-opacity">
               Accord
             </h1>
           </Link>
-          <p className="mt-2 text-sm text-gray-500">
+          <p className="mt-2 text-sm text-text-muted">
             Crea tu cuenta para administrar tu negocio.
           </p>
         </div>
@@ -78,7 +78,7 @@ export default function RegisterPage() {
         <form
           method="POST"
           onSubmit={handleSubmit}
-          className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-8 backdrop-blur-sm space-y-5"
+          className="card p-8 space-y-5"
         >
           {/* Error message */}
           {error && (
@@ -90,7 +90,7 @@ export default function RegisterPage() {
           {/* Name & Last Name */}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label htmlFor="firstName" className="block text-xs font-medium text-gray-400 uppercase tracking-wider">
+              <label htmlFor="firstName" className="input-label">
                 Nombre
               </label>
               <input
@@ -99,11 +99,11 @@ export default function RegisterPage() {
                 type="text"
                 required
                 placeholder="Ej: Juan"
-                className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-4 py-3 text-sm text-white placeholder-gray-600 outline-none focus:border-white/20 focus:bg-white/[0.06] transition-all duration-200"
+                className="input-field"
               />
             </div>
             <div className="space-y-1.5">
-              <label htmlFor="lastName" className="block text-xs font-medium text-gray-400 uppercase tracking-wider">
+              <label htmlFor="lastName" className="input-label">
                 Apellido
               </label>
               <input
@@ -112,14 +112,14 @@ export default function RegisterPage() {
                 type="text"
                 required
                 placeholder="Ej: Pérez"
-                className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-4 py-3 text-sm text-white placeholder-gray-600 outline-none focus:border-white/20 focus:bg-white/[0.06] transition-all duration-200"
+                className="input-field"
               />
             </div>
           </div>
 
           {/* Email */}
           <div className="space-y-1.5">
-            <label htmlFor="email" className="block text-xs font-medium text-gray-400 uppercase tracking-wider">
+            <label htmlFor="email" className="input-label">
               Correo electrónico
             </label>
             <input
@@ -128,13 +128,13 @@ export default function RegisterPage() {
               type="email"
               required
               placeholder="tu@email.com"
-              className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-4 py-3 text-sm text-white placeholder-gray-600 outline-none focus:border-white/20 focus:bg-white/[0.06] transition-all duration-200"
+              className="input-field"
             />
           </div>
 
           {/* Password */}
           <div className="space-y-1.5">
-            <label htmlFor="password" className="block text-xs font-medium text-gray-400 uppercase tracking-wider">
+            <label htmlFor="password" className="input-label">
               Contraseña
             </label>
             <input
@@ -144,7 +144,7 @@ export default function RegisterPage() {
               required
               minLength={6}
               placeholder="Mínimo 6 caracteres"
-              className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-4 py-3 text-sm text-white placeholder-gray-600 outline-none focus:border-white/20 focus:bg-white/[0.06] transition-all duration-200"
+              className="input-field"
             />
           </div>
 
@@ -152,11 +152,11 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-white text-black font-semibold rounded-lg py-3 text-sm hover:bg-gray-200 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150 mt-2"
+            className="btn-primary w-full mt-2"
           >
             {loading ? (
               <span className="flex items-center justify-center gap-2">
-                <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                <svg className="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                 </svg>
@@ -169,9 +169,9 @@ export default function RegisterPage() {
         </form>
 
         {/* Footer link */}
-        <p className="text-center mt-6 text-sm text-gray-500">
+        <p className="text-center mt-6 text-sm text-text-muted">
           ¿Ya tienes cuenta?{" "}
-          <Link href="/login" className="text-white hover:underline transition-all">
+          <Link href="/login" className="text-brand-blue font-semibold hover:text-brand-blue-hover transition-all">
             Inicia sesión
           </Link>
         </p>

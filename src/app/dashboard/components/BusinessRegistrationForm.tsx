@@ -16,9 +16,18 @@ interface Category {
 
 interface BusinessRegistrationFormProps {
   categories: Category[];
+  onSkip?: () => void;
 }
 
-export default function BusinessRegistrationForm({ categories }: BusinessRegistrationFormProps) {
+const MEXICO_STATES = [
+  "Aguascalientes", "Baja California", "Baja California Sur", "Campeche", "Chiapas", "Chihuahua",
+  "Ciudad de México", "Coahuila", "Colima", "Durango", "Estado de México", "Guanajuato", "Guerrero",
+  "Hidalgo", "Jalisco", "Michoacán", "Morelos", "Nayarit", "Nuevo León", "Oaxaca", "Puebla",
+  "Querétaro", "Quintana Roo", "San Luis Potosí", "Sinaloa", "Sonora", "Tabasco", "Tamaulipas",
+  "Tlaxcala", "Veracruz", "Yucatán", "Zacatecas"
+];
+
+export default function BusinessRegistrationForm({ categories, onSkip }: BusinessRegistrationFormProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -26,11 +35,20 @@ export default function BusinessRegistrationForm({ categories }: BusinessRegistr
     name: "",
     slug: "",
     phone: "",
-    address: "",
     description: "",
     theme_palette: "classic_dark",
     policies: "",
     subcategory_id: "",
+  });
+
+  const [addressDetails, setAddressDetails] = useState({
+    street: "",
+    ext_number: "",
+    int_number: "",
+    neighborhood: "",
+    zip_code: "",
+    city: "",
+    state: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -39,16 +57,27 @@ export default function BusinessRegistrationForm({ categories }: BusinessRegistr
     if (name === "slug") setError(null); // Clear slug error on change
   };
 
+  const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setAddressDetails((prev) => ({ ...prev, [name]: value }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
 
+    // Concat address string: 'Calle 123 Int 4, Colonia Centro, C.P. 50000, Toluca, Estado de México'
+    const fullAddress = `${addressDetails.street} ${addressDetails.ext_number}${addressDetails.int_number ? ' Int ' + addressDetails.int_number : ''}, Col. ${addressDetails.neighborhood}, C.P. ${addressDetails.zip_code}, ${addressDetails.city}, ${addressDetails.state}`;
+
     try {
       const response = await fetch("/api/business", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          address: fullAddress
+        }),
       });
 
       const data = await response.json();
@@ -67,14 +96,16 @@ export default function BusinessRegistrationForm({ categories }: BusinessRegistr
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-8 bg-zinc-900/50 rounded-2xl border border-zinc-800 backdrop-blur-sm animate-in fade-in duration-500">
-      <h2 className="text-2xl font-bold text-white mb-2">Configura tu Negocio</h2>
-      <p className="text-zinc-400 mb-8">Completa la información para comenzar a gestionar tus citas.</p>
+    <div className="max-w-2xl mx-auto card p-10 shadow-2xl animate-in fade-in zoom-in-95 duration-500">
+      <div className="mb-8">
+        <h2 className="text-3xl font-bold text-text-main mb-2 tracking-tight">Configura tu Negocio</h2>
+        <p className="text-text-muted text-sm">Completa esta información básica para activar tu perfil público.</p>
+      </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <form onSubmit={handleSubmit} className="space-y-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="space-y-2">
-            <label htmlFor="name" className="text-sm font-medium text-zinc-300">Nombre del Negocio</label>
+            <label htmlFor="name" className="input-label">Nombre Comercial</label>
             <input
               type="text"
               id="name"
@@ -82,15 +113,17 @@ export default function BusinessRegistrationForm({ categories }: BusinessRegistr
               required
               value={formData.name}
               onChange={handleChange}
-              className="w-full px-4 py-2 bg-zinc-950 border border-zinc-800 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/10 transition-all placeholder:text-zinc-600"
+              className="input-field"
               placeholder="Ej: Barbería Central"
             />
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="slug" className="text-sm font-medium text-zinc-300">URL del Negocio (Slug)</label>
-            <div className="relative">
-              <span className="absolute left-3 top-2 text-zinc-500">accord.com/</span>
+            <label htmlFor="slug" className="input-label">URL de Reserva</label>
+            <div className="flex group">
+              <div className="flex items-center px-4 bg-bg-surface border-y border-l border-surface-border rounded-l-xl text-text-muted text-xs font-medium transition-colors group-focus-within:border-brand-blue">
+                accordapp.com/
+              </div>
               <input
                 type="text"
                 id="slug"
@@ -98,21 +131,115 @@ export default function BusinessRegistrationForm({ categories }: BusinessRegistr
                 required
                 value={formData.slug}
                 onChange={handleChange}
-                className={`w-full pl-[98px] pr-4 py-2 bg-zinc-950 border ${error === "Este enlace ya está en uso." ? "border-red-500" : "border-zinc-800"} rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/10 transition-all placeholder:text-zinc-600`}
+                className={`flex-1 px-4 py-3 bg-bg-base border-y border-r ${error === "Este enlace ya está en uso." ? "border-red-500" : "border-surface-border"} rounded-r-xl text-text-main focus:border-brand-blue outline-none text-sm placeholder:text-text-muted`}
                 placeholder="mi-negocio"
               />
             </div>
-            {error === "Este enlace ya está en uso." && (
-              <p className="text-xs text-red-500 pt-1 font-medium italic animate-in slide-in-from-top-1">
-                {error}
-              </p>
-            )}
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-6">
+          <h3 className="text-[10px] font-bold text-text-muted uppercase tracking-widest border-b border-surface-border pb-2">Ubicación Detallada</h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="md:col-span-2 space-y-1.5">
+              <label className="input-label">Calle</label>
+              <input
+                type="text"
+                name="street"
+                required
+                value={addressDetails.street}
+                onChange={handleAddressChange}
+                placeholder="Av. Paseo de los Leones"
+                className="input-field"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <label className="input-label">Num Ext.</label>
+              <input
+                type="text"
+                name="ext_number"
+                required
+                value={addressDetails.ext_number}
+                onChange={handleAddressChange}
+                placeholder="101"
+                className="input-field"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <label className="input-label">Num Int. (Opcional)</label>
+              <input
+                type="text"
+                name="int_number"
+                value={addressDetails.int_number}
+                onChange={handleAddressChange}
+                placeholder="Local 4"
+                className="input-field"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <label className="input-label">Colonia</label>
+              <input
+                type="text"
+                name="neighborhood"
+                required
+                value={addressDetails.neighborhood}
+                onChange={handleAddressChange}
+                placeholder="Cumbres 3er Sector"
+                className="input-field"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="space-y-1.5">
+              <label className="input-label">C.P.</label>
+              <input
+                type="text"
+                name="zip_code"
+                required
+                value={addressDetails.zip_code}
+                onChange={handleAddressChange}
+                placeholder="64610"
+                className="input-field"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <label className="input-label">Ciudad / Municipio</label>
+              <input
+                type="text"
+                name="city"
+                required
+                value={addressDetails.city}
+                onChange={handleAddressChange}
+                placeholder="Monterrey"
+                className="input-field"
+              />
+            </div>
+            <div className="col-span-2 md:col-span-1 space-y-1.5">
+              <label className="input-label">Estado</label>
+              <select
+                name="state"
+                required
+                value={addressDetails.state}
+                onChange={handleAddressChange}
+                className="input-field h-[46px]"
+              >
+                <option value="">Selecciona</option>
+                {MEXICO_STATES.map(s => (
+                  <option key={s} value={s}>{s}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2">
           <div className="space-y-2">
-            <label htmlFor="phone" className="text-sm font-medium text-zinc-300">Teléfono del Negocio</label>
+            <label htmlFor="phone" className="input-label">WhatsApp / Teléfono</label>
             <input
               type="tel"
               id="phone"
@@ -120,113 +247,52 @@ export default function BusinessRegistrationForm({ categories }: BusinessRegistr
               required
               value={formData.phone}
               onChange={handleChange}
-              className="w-full px-4 py-2 bg-zinc-950 border border-zinc-800 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/10 transition-all placeholder:text-zinc-600"
+              className="input-field"
               placeholder="+52 ..."
             />
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="address" className="text-sm font-medium text-zinc-300">Dirección</label>
-            <input
-              type="text"
-              id="address"
-              name="address"
-              required
-              value={formData.address}
-              onChange={handleChange}
-              className="w-full px-4 py-2 bg-zinc-950 border border-zinc-800 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/10 transition-all placeholder:text-zinc-600"
-              placeholder="Ej: Av. Principal 123"
-            />
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <label htmlFor="description" className="text-sm font-medium text-zinc-300">Descripción del Negocio</label>
-          <textarea
-            id="description"
-            name="description"
-            rows={3}
-            value={formData.description}
-            onChange={handleChange}
-            className="w-full px-4 py-2 bg-zinc-950 border border-zinc-800 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/10 transition-all resize-none placeholder:text-zinc-600"
-            placeholder="Cuenta un poco sobre lo que haces..."
-          />
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-2">
-            <label htmlFor="subcategory_id" className="text-sm font-medium text-zinc-300">Categoría del Negocio</label>
+            <label htmlFor="subcategory_id" className="input-label">Línea de Negocio</label>
             <select
               id="subcategory_id"
               name="subcategory_id"
               required
               value={formData.subcategory_id}
               onChange={handleChange}
-              className="w-full px-4 py-2 bg-zinc-950 border border-zinc-800 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/10 transition-all"
+              className="input-field h-[46px]"
             >
-              <option value="">Selecciona una opción</option>
+              <option value="">Selecciona una categoría</option>
               {categories.map((cat) => (
                 <optgroup key={cat.id} label={cat.name}>
                   {cat.business_subcategories.map((sub) => (
-                    <option key={sub.id} value={sub.id}>
-                      {sub.name}
-                    </option>
+                    <option key={sub.id} value={sub.id}>{sub.name}</option>
                   ))}
                 </optgroup>
               ))}
             </select>
           </div>
+        </div>
 
-          <div className="space-y-2">
-            <label htmlFor="theme_palette" className="text-sm font-medium text-zinc-300">Paleta de Colores</label>
-            <select
-              id="theme_palette"
-              name="theme_palette"
-              value={formData.theme_palette}
-              onChange={handleChange}
-              className="w-full px-4 py-2 bg-zinc-950 border border-zinc-800 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/10 transition-all"
+        <div className="flex flex-col sm:flex-row gap-4 pt-4">
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="btn-primary flex-1 py-4"
+          >
+            {isLoading ? "Creando..." : "Crear Mi Negocio"}
+          </button>
+          
+          {onSkip && (
+            <button
+              type="button"
+              onClick={onSkip}
+              className="btn-secondary px-8 py-4 uppercase tracking-widest text-[10px]"
             >
-              <option value="classic_dark">Premium Dark (Negro y Gris)</option>
-              <option value="deep_ocean">Deep Ocean (Azul Marino)</option>
-              <option value="forest_night">Forest Night (Verde Esmeralda Oscuro)</option>
-              <option value="royal_gold">Royal Gold (Dorado sobre Negro)</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <label htmlFor="policies" className="text-sm font-medium text-zinc-300">Políticas y Términos (Opcional)</label>
-          <textarea
-            id="policies"
-            name="policies"
-            rows={3}
-            value={formData.policies}
-            onChange={handleChange}
-            className="w-full px-4 py-2 bg-zinc-950 border border-zinc-800 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/10 transition-all resize-none placeholder:text-zinc-600"
-            placeholder="Ej: Cancelaciones con 24h de anticipación..."
-          />
-        </div>
-
-        {error && error !== "Este enlace ya está en uso." && (
-          <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-500 text-sm">
-            {error}
-          </div>
-        )}
-
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="w-full py-3 bg-white text-black font-bold rounded-lg hover:bg-zinc-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed group"
-        >
-          {isLoading ? "Registrando..." : (
-            <span className="flex items-center justify-center gap-2">
-              Finalizar Registro
-              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </span>
+              Configurar más tarde
+            </button>
           )}
-        </button>
+        </div>
       </form>
     </div>
   );

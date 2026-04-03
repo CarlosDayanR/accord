@@ -34,8 +34,8 @@ export default async function SettingsPage() {
   return (
     <div className="flex flex-col gap-10">
       <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold tracking-tight">Configuración del Negocio</h1>
-        <p className="text-zinc-400">Actualiza la información pública de tu perfil.</p>
+        <h1 className="text-3xl font-bold tracking-tight text-text-main">Configuración del Negocio</h1>
+        <p className="text-text-muted">Actualiza la información pública de tu perfil.</p>
       </div>
 
       <SettingsForm business={business} />

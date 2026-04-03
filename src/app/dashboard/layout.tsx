@@ -29,18 +29,19 @@ export default async function DashboardLayout({
   // will handle showing the registration form.
   
   return (
-    <div className="min-h-screen bg-black text-white p-4 md:p-8">
+    <div className="min-h-screen bg-bg-surface text-text-main p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
-        {!business ? (
-          <main className="w-full">{children}</main>
-        ) : (
-          <div className="flex flex-col md:flex-row gap-8 h-[calc(100vh-4rem)]">
-            <Sidebar userName={session.user.name || "Usuario"} />
-            <main className="flex-1 overflow-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
-              {children}
-            </main>
-          </div>
-        )}
+        <div className="flex flex-col md:flex-row gap-8 h-[calc(100vh-4rem)]">
+          <Sidebar 
+            businessName={business?.name || "Nuevo Negocio"} 
+            logoUrl={business?.logoUrl}
+            userName={session.user.name || "Usuario"} 
+            hasBusiness={!!business}
+          />
+          <main className="flex-1 overflow-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
+            {children}
+          </main>
+        </div>
       </div>
     </div>
   );

@@ -79,29 +79,29 @@ export default function HoursPage() {
     }
   };
 
-  if (isLoading) return <div className="text-zinc-500">Cargando horarios...</div>;
+  if (isLoading) return <div className="text-text-muted">Cargando horarios...</div>;
 
   return (
     <div className="flex flex-col gap-8 max-w-4xl">
       <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold font-geist tracking-tight">Horarios de Atención</h1>
-        <p className="text-zinc-400">Configura los días y horas en los que tu negocio recibe clientes.</p>
+        <h1 className="text-3xl font-bold font-geist tracking-tight text-text-main">Horarios de Atención</h1>
+        <p className="text-text-muted">Configura los días y horas en los que tu negocio recibe clientes.</p>
       </div>
 
-      <div className="bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden shadow-2xl">
+      <div className="card !p-0 shadow-2xl overflow-hidden">
         <div className="p-8 space-y-6">
           {schedules.map((schedule, index) => (
             <div 
               key={schedule.day_of_week} 
               className={`flex flex-col md:flex-row items-center justify-between gap-6 p-4 rounded-2xl transition-all duration-300 ${
-                schedule.is_closed ? "bg-zinc-950/50 opacity-60" : "bg-white/[0.02] border border-white/[0.05]"
+                schedule.is_closed ? "bg-text-muted/5 opacity-60" : "bg-bg-base border border-surface-border"
               }`}
             >
               <div className="flex items-center gap-4 w-full md:w-48">
                 <button
                   onClick={() => handleToggle(schedule.day_of_week)}
                   className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${
-                    !schedule.is_closed ? "bg-emerald-500" : "bg-zinc-700"
+                    !schedule.is_closed ? "bg-brand-blue" : "bg-surface-border"
                   }`}
                 >
                   <span
@@ -110,7 +110,7 @@ export default function HoursPage() {
                     }`}
                   />
                 </button>
-                <span className={`font-bold ${!schedule.is_closed ? "text-white" : "text-zinc-500"}`}>
+                <span className={`font-bold ${!schedule.is_closed ? "text-text-main" : "text-text-muted"}`}>
                   {DAYS[index]}
                 </span>
               </div>
@@ -118,27 +118,27 @@ export default function HoursPage() {
               {!schedule.is_closed ? (
                 <div className="flex items-center gap-4 animate-in fade-in slide-in-from-left-2 duration-300">
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest">Abre</span>
+                    <span className="input-label !mb-0">Abre</span>
                     <input
                       type="time"
                       value={schedule.open_time}
                       onChange={(e) => handleTimeChange(schedule.day_of_week, "open_time", e.target.value)}
-                      className="bg-black border border-zinc-700 rounded-lg px-3 py-1.5 text-sm text-white focus:border-emerald-500 outline-none transition-all"
+                      className="input-field !py-1.5"
                     />
                   </div>
-                  <div className="w-4 h-px bg-zinc-700 mt-4" />
+                  <div className="w-4 h-px bg-surface-border mt-1" />
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest">Cierra</span>
+                    <span className="input-label !mb-0">Cierra</span>
                     <input
                       type="time"
                       value={schedule.close_time}
                       onChange={(e) => handleTimeChange(schedule.day_of_week, "close_time", e.target.value)}
-                      className="bg-black border border-zinc-700 rounded-lg px-3 py-1.5 text-sm text-white focus:border-emerald-500 outline-none transition-all"
+                      className="input-field !py-1.5"
                     />
                   </div>
                 </div>
               ) : (
-                <div className="text-sm text-zinc-600 font-medium italic">
+                <div className="text-sm text-text-muted font-medium italic">
                   Cerrado para citas
                 </div>
               )}
@@ -146,7 +146,7 @@ export default function HoursPage() {
           ))}
         </div>
 
-        <div className="p-8 bg-zinc-950/50 border-t border-zinc-800 flex items-center justify-between">
+        <div className="p-8 bg-bg-base border-t border-surface-border flex items-center justify-between">
           <div>
             {message && (
               <p className={`text-sm font-medium ${message.type === "success" ? "text-emerald-500" : "text-red-500"} animate-in fade-in duration-300`}>
@@ -157,7 +157,7 @@ export default function HoursPage() {
           <button
             onClick={handleSave}
             disabled={isSaving}
-            className="bg-white text-black font-bold px-8 py-3 rounded-xl hover:bg-zinc-200 transition-all disabled:opacity-50 active:scale-[0.98] shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+            className="btn-primary px-8 py-3"
           >
             {isSaving ? "Guardando..." : "Guardar Horario Semanal"}
           </button>
