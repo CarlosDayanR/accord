@@ -88,37 +88,33 @@ html {
    GLOBAL COMPONENT STYLES
    ═══════════════════════════════════════════════════════════ */
 
-/* ── Buttons: Pill-shaped with Stripe 3D Hover ────────────── */
+/* ── Buttons: Primary (Premium Gradient & Glow) ─────────────── */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.75rem 2rem;
+  padding: 0.625rem 1.25rem;
   font-weight: 600;
   font-size: 0.875rem;
   letter-spacing: 0.01em;
   color: #fff;
-  background-color: var(--brand-blue);
-  border: none;
+  background: linear-gradient(to bottom, #3bb2f2, #2EA7ED);
+  border: 1px solid #2099de;
   border-radius: var(--radius-pill);
   cursor: pointer;
-  transition:
-    transform 180ms cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 180ms cubic-bezier(0.4, 0, 0.2, 1),
-    background-color 180ms ease;
-  box-shadow: var(--shadow-sm), 0 1px 0 0 rgba(0, 0, 0, 0.06);
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
 }
 
 .btn-primary:hover {
-  background-color: var(--brand-blue-hover);
   transform: translateY(-1px);
-  box-shadow: var(--shadow-elevated), 0 2px 0 0 rgba(0, 0, 0, 0.04);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.12);
 }
 
 .btn-primary:active {
   transform: translateY(0);
-  box-shadow: var(--shadow-xs);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 
 .btn-primary:disabled {
@@ -126,6 +122,8 @@ html {
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
+  background: var(--brand-blue);
+  border-color: transparent;
 }
 
 .btn-secondary {
@@ -158,6 +156,50 @@ html {
 .btn-secondary:active {
   transform: translateY(0);
   box-shadow: var(--shadow-xs);
+}
+
+/* ── Pill UI Components (Clean Tech Aesthetic) ──────────────── */
+.btn-pill-white {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  background: #ffffff;
+  border: 1px solid #ebebeb;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  color: var(--text-main);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-pill-white:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.12);
+  border-color: rgba(46, 167, 237, 0.2);
+}
+
+.btn-pill-white:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.tag-pill-white {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-pill);
+  color: var(--text-main);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
 }
 
 /* ── Cards: Stripe-style with soft shadows ─────────────────── */

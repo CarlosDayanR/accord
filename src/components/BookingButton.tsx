@@ -112,7 +112,7 @@ export default function BookingButton({ className, serviceId, serviceName, busin
         onClick={() => setIsOpen(true)}
         className={className}
       >
-        Agendar Cita
+        Agendar cita
       </button>
 
       {isOpen && (
@@ -121,7 +121,7 @@ export default function BookingButton({ className, serviceId, serviceName, busin
             {/* Header */}
             <div className="px-8 py-6 border-b border-surface-border flex items-center justify-between bg-bg-base">
               <div>
-                <p className="text-[10px] text-brand-blue font-bold uppercase tracking-widest mb-1">Agendar Servicio:</p>
+                <p className="text-[10px] text-brand-blue font-bold uppercase tracking-widest mb-1">Agendar servicio:</p>
                 <h3 className="text-xl font-bold tracking-tight text-text-main">{serviceName}</h3>
               </div>
               <button 
@@ -138,7 +138,7 @@ export default function BookingButton({ className, serviceId, serviceName, busin
             <div className="p-8">
               {step === 1 ? (
                 <div className="space-y-6 animate-in slide-in-from-right-4 duration-300">
-                  <h4 className="text-lg font-bold text-text-main">1. Selecciona el Momento</h4>
+                  <h4 className="text-lg font-bold text-text-main">1. Selecciona el momento</h4>
                   <p className="text-sm text-text-muted">Elige la fecha y hora que mejor te convenga.</p>
                   
                   <div className="relative">
@@ -157,19 +157,19 @@ export default function BookingButton({ className, serviceId, serviceName, busin
                     onClick={nextStep}
                     className="btn-primary w-full py-4 mt-4"
                   >
-                    Siguiente: Mis Datos
+                    Siguiente: mis datos
                   </button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6 animate-in slide-in-from-right-4 duration-300">
-                  <h4 className="text-lg font-bold text-text-main">2. Tus Datos de Contacto</h4>
+                  <h4 className="text-lg font-bold text-text-main">2. Tus datos de contacto</h4>
                   <p className="text-sm text-text-muted">¿A quién debemos esperar? Recibirás una notificación pronto.</p>
 
                   <div className="space-y-4">
                     <input 
                       type="text" 
                       name="client_name"
-                      placeholder="Nombre Completo"
+                      placeholder="Nombre completo"
                       required
                       value={formData.client_name}
                       onChange={handleChange}
@@ -201,7 +201,7 @@ export default function BookingButton({ className, serviceId, serviceName, busin
                       disabled={isSubmitting}
                       className="btn-primary flex-1 py-4"
                     >
-                      {isSubmitting ? "Agendando..." : "Confirmar Cita"}
+                      {isSubmitting ? "Agendando..." : "Confirmar cita"}
                     </button>
                   </div>
                 </form>

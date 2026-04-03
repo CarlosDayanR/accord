@@ -149,7 +149,7 @@ export default function AppointmentsPage() {
         {/* Manual Appointment Form */}
         <div className="lg:col-span-1">
           <div className="card p-6 sticky top-8">
-            <h2 className="text-lg font-bold text-text-main mb-4">Registro Manual</h2>
+            <h2 className="text-lg font-bold text-text-main mb-4">Registro manual</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-1">
                 <label className="input-label">Nombre del Cliente</label>
@@ -227,7 +227,7 @@ export default function AppointmentsPage() {
                 disabled={isSubmitting}
                 className="btn-primary w-full py-3 mt-2"
               >
-                {isSubmitting ? "Registrando..." : "Registrar Cita"}
+                {isSubmitting ? "Registrando..." : "Registrar cita"}
               </button>
             </form>
           </div>

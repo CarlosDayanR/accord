@@ -105,7 +105,7 @@ export default function BusinessRegistrationForm({ categories, onSkip }: Busines
       <form onSubmit={handleSubmit} className="space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="space-y-2">
-            <label htmlFor="name" className="input-label">Nombre Comercial</label>
+            <label htmlFor="name" className="input-label">Nombre comercial</label>
             <input
               type="text"
               id="name"
@@ -155,7 +155,7 @@ export default function BusinessRegistrationForm({ categories, onSkip }: Busines
               />
             </div>
             <div className="space-y-1.5">
-              <label className="input-label">Num Ext.</label>
+              <label className="input-label">Num ext.</label>
               <input
                 type="text"
                 name="ext_number"
@@ -170,7 +170,7 @@ export default function BusinessRegistrationForm({ categories, onSkip }: Busines
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="input-label">Num Int. (Opcional)</label>
+              <label className="input-label">Num int. (opcional)</label>
               <input
                 type="text"
                 name="int_number"
@@ -280,7 +280,7 @@ export default function BusinessRegistrationForm({ categories, onSkip }: Busines
             disabled={isLoading}
             className="btn-primary flex-1 py-4"
           >
-            {isLoading ? "Creando..." : "Crear Mi Negocio"}
+            {isLoading ? "Creando..." : "Crear mi negocio"}
           </button>
           
           {onSkip && (

@@ -47,7 +47,7 @@ export default function DashboardOnboarding({ categories }: DashboardOnboardingP
             onClick={() => setShowForm(true)}
             className="btn-primary px-10 py-4 shadow-xl shadow-brand-blue/10"
           >
-            Configurar Negocio Ahora
+            Configurar negocio ahora
           </button>
         </div>
       </div>

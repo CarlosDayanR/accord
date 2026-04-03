@@ -159,7 +159,7 @@ export default function HoursPage() {
             disabled={isSaving}
             className="btn-primary px-8 py-3"
           >
-            {isSaving ? "Guardando..." : "Guardar Horario Semanal"}
+            {isSaving ? "Guardando..." : "Guardar horario semanal"}
           </button>
         </div>
       </div>

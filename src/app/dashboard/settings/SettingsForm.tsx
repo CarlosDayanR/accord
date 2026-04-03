@@ -110,7 +110,7 @@ export default function SettingsForm({ business }: SettingsFormProps) {
             <svg className="w-6 h-6 text-text-muted group-hover:text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
-            <span className="text-[10px] text-text-muted font-bold uppercase text-center px-2 leading-tight">Subir Logo Próximamente</span>
+            <span className="text-[10px] text-text-muted font-bold uppercase text-center px-2 leading-tight">Subir logo próximamente</span>
           </div>
         </div>
 
@@ -125,7 +125,7 @@ export default function SettingsForm({ business }: SettingsFormProps) {
                   onClick={() => setIsEditingAddress(true)}
                   className="text-[10px] font-bold text-brand-blue uppercase tracking-widest hover:text-brand-blue-hover transition-colors"
                 >
-                  Modificar Dirección
+                  Modificar dirección
                 </button>
               )}
             </div>
@@ -150,7 +150,7 @@ export default function SettingsForm({ business }: SettingsFormProps) {
                     />
                   </div>
                   <div className="space-y-1.5">
-                    <label className="input-label">Num Ext.</label>
+                    <label className="input-label">Num ext.</label>
                     <input
                       type="text"
                       required
@@ -165,7 +165,7 @@ export default function SettingsForm({ business }: SettingsFormProps) {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="input-label">Num Int. (Opcional)</label>
+                    <label className="input-label">Num int. (opcional)</label>
                     <input
                       type="text"
                       name="int_number"
@@ -233,7 +233,7 @@ export default function SettingsForm({ business }: SettingsFormProps) {
                     onClick={() => setIsEditingAddress(false)}
                     className="text-[10px] font-bold text-text-muted uppercase tracking-widest hover:text-text-main"
                   >
-                    Mantener Dirección Actual
+                    Mantener dirección actual
                   </button>
                 )}
               </div>
@@ -294,7 +294,7 @@ export default function SettingsForm({ business }: SettingsFormProps) {
           disabled={isLoading}
           className="btn-primary w-full py-4 shadow-lg shadow-brand-blue/10"
         >
-          {isLoading ? "Guardando..." : "Guardar Cambios"}
+          {isLoading ? "Guardando..." : "Guardar cambios"}
         </button>
       </form>
     </div>

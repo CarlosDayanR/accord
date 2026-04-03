@@ -33,7 +33,7 @@ export default async function DashboardLayout({
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row gap-8 h-[calc(100vh-4rem)]">
           <Sidebar 
-            businessName={business?.name || "Nuevo Negocio"} 
+            businessName={business?.name || "Nuevo negocio"} 
             logoUrl={business?.logoUrl}
             userName={session.user.name || "Usuario"} 
             hasBusiness={!!business}

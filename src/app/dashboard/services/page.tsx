@@ -153,7 +153,7 @@ export default function ServicesPage() {
         {/* Create Form Container */}
         <div className="lg:col-span-1">
           <div className="card p-6 sticky top-8 animate-in fade-in slide-in-from-left-4 duration-500 cursor-default">
-            <h2 className="text-lg font-bold mb-4 text-text-main">Añadir Nuevo Servicio</h2>
+            <h2 className="text-lg font-bold mb-4 text-text-main">Añadir nuevo servicio</h2>
             <form onSubmit={handleCreateSubmit} className="space-y-4">
               <div className="space-y-1">
                 <label className="input-label">Nombre</label>
@@ -211,7 +211,7 @@ export default function ServicesPage() {
                 disabled={isSubmitting}
                 className="btn-primary w-full py-3 mt-2"
               >
-                {isSubmitting ? "Guardando..." : "Crear Servicio"}
+                {isSubmitting ? "Guardando..." : "Crear servicio"}
               </button>
             </form>
           </div>
@@ -276,7 +276,7 @@ export default function ServicesPage() {
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/40 backdrop-blur-sm animate-in fade-in duration-300">
           <div className="max-w-md w-full bg-bg-base border border-surface-border rounded-3xl p-8 shadow-2xl animate-in zoom-in-95 duration-300">
-            <h2 className="text-2xl font-bold mb-2 text-text-main">Editar Servicio</h2>
+            <h2 className="text-2xl font-bold mb-2 text-text-main">Editar servicio</h2>
             <p className="text-text-muted text-sm mb-6">Modifica los detalles actuales del servicio.</p>
             
             <form onSubmit={handleEditSubmit} className="space-y-5">

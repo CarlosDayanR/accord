@@ -6,35 +6,24 @@ export default async function Home() {
   const session = await getServerSession(authOptions);
 
   return (
-    <div className="min-h-screen bg-bg-base flex flex-col items-center justify-center px-4 relative overflow-hidden">
-      {/* Background glow effects */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-        <div className="w-[800px] h-[800px] bg-brand-blue/5 rounded-full blur-3xl" />
-      </div>
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-        <div className="w-[400px] h-[400px] bg-brand-blue/10 rounded-full blur-3xl" />
-      </div>
-
+    <div className="min-h-screen bg-white flex flex-col items-center justify-center px-4 relative overflow-hidden">
       {/* Content */}
       <div className="relative text-center max-w-2xl mx-auto">
-        {/* Badge */}
-        <div className="inline-flex items-center gap-2 bg-brand-blue/5 border border-brand-blue/10 rounded-full px-4 py-1.5 mb-8">
-          <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
-          <span className="text-xs text-text-muted font-medium">Plataforma en desarrollo activo</span>
+        {/* Header Layout: Logo + Brand */}
+        <div className="flex items-center justify-center gap-x-4 mb-8">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gray-100 rounded-xl" />
+          <h1 className="text-6xl sm:text-7xl font-bold text-text-main tracking-tighter leading-none">
+            Accord
+          </h1>
         </div>
 
-        {/* Title */}
-        <h1 className="text-7xl sm:text-8xl font-bold text-text-main tracking-tighter mb-6 leading-none">
-          Accord
-        </h1>
-
-        {/* Subtitle */}
-        <p className="text-lg sm:text-xl text-text-muted mb-4 leading-relaxed max-w-lg mx-auto">
-          El sistema operativo de tu tiempo.
-        </p>
-        <p className="text-sm text-text-muted mb-12 max-w-md mx-auto">
-          Gestiona citas, servicios y clientes desde una sola plataforma.
-          Tu negocio, organizado y automatizado.
+        {/* Subtitle & Description */}
+        <h2 className="text-2xl sm:text-3xl font-semibold text-text-main mb-6 tracking-tight">
+          El control total de tu tiempo.
+        </h2>
+        
+        <p className="text-base sm:text-lg text-text-muted mb-16 max-w-lg mx-auto leading-relaxed">
+          Gestiona tus citas, servicios y clientes en un solo lugar.
         </p>
 
         {/* CTA Buttons */}
@@ -52,13 +41,13 @@ export default async function Home() {
                 href="/register"
                 className="btn-primary w-full sm:w-auto"
               >
-                Comienza Gratis
+                Comienza gratis
               </Link>
               <Link
                 href="/login"
-                className="btn-secondary w-full sm:w-auto"
+                className="btn-pill-white w-full sm:w-auto"
               >
-                Iniciar Sesión
+                Iniciar sesión
               </Link>
             </>
           )}
