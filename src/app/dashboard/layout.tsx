@@ -31,14 +31,14 @@ export default async function DashboardLayout({
   return (
     <div className="min-h-screen bg-bg-surface text-text-main p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row gap-8 h-[calc(100vh-4rem)]">
+        <div className="flex flex-col md:flex-row gap-0 md:gap-8 h-[calc(100vh-4rem)]">
           <Sidebar 
             businessName={business?.name || "Nuevo negocio"} 
             logoUrl={business?.logoUrl}
             userName={session.user.name || "Usuario"} 
             hasBusiness={!!business}
           />
-          <main className="flex-1 overflow-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
+          <main className="flex-1 overflow-auto animate-in fade-in slide-in-from-bottom-4 duration-700 pt-6 md:pt-0 pb-16">
             {children}
           </main>
         </div>

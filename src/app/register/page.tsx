@@ -9,6 +9,7 @@ export default function RegisterPage() {
   const router = useRouter();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -65,7 +66,7 @@ export default function RegisterPage() {
         {/* Brand */}
         <div className="text-center mb-10">
           <Link href="/" className="inline-block">
-            <h1 className="text-3xl font-bold text-brand-blue tracking-tighter hover:opacity-80 transition-opacity">
+            <h1 className="text-3xl font-bold text-text-main tracking-tighter hover:opacity-80 transition-opacity">
               Accord
             </h1>
           </Link>
@@ -137,15 +138,34 @@ export default function RegisterPage() {
             <label htmlFor="password" className="input-label">
               Contraseña
             </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              required
-              minLength={6}
-              placeholder="Mínimo 6 caracteres"
-              className="input-field"
-            />
+            <div className="relative">
+              <input
+                id="password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                required
+                minLength={6}
+                placeholder="Mínimo 6 caracteres"
+                className="input-field pr-12"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-0 top-0 h-full px-4 text-gray-400 hover:text-text-main transition-colors focus:outline-none z-10 flex items-center justify-center"
+                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+              >
+                {showPassword ? (
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10c0 0 4 5 9 5s9-5 9-5M3 10l1.5 2M7 13v2M12 15v2M17 13v2M21 10l-1.5 2" />
+                  </svg>
+                ) : (
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} cx="12" cy="12" r="3" />
+                  </svg>
+                )}
+              </button>
+            </div>
           </div>
 
           {/* Submit */}

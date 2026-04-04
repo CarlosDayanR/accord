@@ -98,8 +98,13 @@ export default function BusinessRegistrationForm({ categories, onSkip }: Busines
   return (
     <div className="max-w-2xl mx-auto card p-10 shadow-2xl animate-in fade-in zoom-in-95 duration-500">
       <div className="mb-8">
-        <h2 className="text-3xl font-bold text-text-main mb-2 tracking-tight">Configura tu Negocio</h2>
-        <p className="text-text-muted text-sm">Completa esta información básica para activar tu perfil público.</p>
+        <div className="flex items-center gap-3 mb-2">
+          <svg className="w-8 h-8 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+          </svg>
+          <h2 className="text-3xl font-bold text-text-main tracking-tight">Configura tu negocio</h2>
+        </div>
+        <p className="text-text-muted text-sm leading-relaxed">Completa estos datos para que tus clientes puedan descubrir tu negocio y agendar sus citas.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-8">
@@ -119,9 +124,9 @@ export default function BusinessRegistrationForm({ categories, onSkip }: Busines
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="slug" className="input-label">URL de Reserva</label>
-            <div className="flex group">
-              <div className="flex items-center px-4 bg-bg-surface border-y border-l border-surface-border rounded-l-xl text-text-muted text-xs font-medium transition-colors group-focus-within:border-brand-blue">
+            <label htmlFor="slug" className="input-label">Crea el enlace de tu negocio</label>
+            <div className="flex w-full group">
+              <div className="flex items-center px-4 bg-bg-surface border-y border-l border-surface-border rounded-l-xl text-text-muted text-xs font-medium transition-colors group-focus-within:border-brand-blue whitespace-nowrap">
                 accordapp.com/
               </div>
               <input
@@ -131,7 +136,7 @@ export default function BusinessRegistrationForm({ categories, onSkip }: Busines
                 required
                 value={formData.slug}
                 onChange={handleChange}
-                className={`flex-1 px-4 py-3 bg-bg-base border-y border-r ${error === "Este enlace ya está en uso." ? "border-red-500" : "border-surface-border"} rounded-r-xl text-text-main focus:border-brand-blue outline-none text-sm placeholder:text-text-muted`}
+                className={`flex-1 min-w-0 px-4 py-3 bg-bg-base border-y border-r ${error === "Este enlace ya está en uso." ? "border-red-500" : "border-surface-border"} rounded-r-xl text-text-main focus:border-brand-blue outline-none text-sm placeholder:text-text-muted`}
                 placeholder="mi-negocio"
               />
             </div>
@@ -139,7 +144,7 @@ export default function BusinessRegistrationForm({ categories, onSkip }: Busines
         </div>
 
         <div className="space-y-6">
-          <h3 className="text-[10px] font-bold text-text-muted uppercase tracking-widest border-b border-surface-border pb-2">Ubicación Detallada</h3>
+          <h3 className="text-[10px] font-bold text-text-muted uppercase tracking-widest border-b border-surface-border pb-2">Ubicación detallada</h3>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="md:col-span-2 space-y-1.5">
@@ -208,7 +213,7 @@ export default function BusinessRegistrationForm({ categories, onSkip }: Busines
               />
             </div>
             <div className="space-y-1.5">
-              <label className="input-label">Ciudad / Municipio</label>
+              <label className="input-label">Ciudad / municipio</label>
               <input
                 type="text"
                 name="city"
@@ -239,7 +244,7 @@ export default function BusinessRegistrationForm({ categories, onSkip }: Busines
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2">
           <div className="space-y-2">
-            <label htmlFor="phone" className="input-label">WhatsApp / Teléfono</label>
+            <label htmlFor="phone" className="input-label">WhatsApp / teléfono</label>
             <input
               type="tel"
               id="phone"
@@ -253,7 +258,7 @@ export default function BusinessRegistrationForm({ categories, onSkip }: Busines
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="subcategory_id" className="input-label">Línea de Negocio</label>
+            <label htmlFor="subcategory_id" className="input-label">Categoría de negocio</label>
             <select
               id="subcategory_id"
               name="subcategory_id"
