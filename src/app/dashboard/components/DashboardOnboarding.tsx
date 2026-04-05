@@ -20,15 +20,15 @@ export default function DashboardOnboarding({ categories }: DashboardOnboardingP
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 opacity-40 grayscale">
           <div className="card p-6">
-            <p className="text-text-muted text-xs font-bold uppercase tracking-widest mb-1">Citas Hoy</p>
+            <p className="text-text-muted text-xs font-bold mb-1">Citas hoy</p>
             <p className="text-4xl font-bold text-text-main">0</p>
           </div>
           <div className="card p-6">
-            <p className="text-text-muted text-xs font-bold uppercase tracking-widest mb-1">Citas Pendientes</p>
+            <p className="text-text-muted text-xs font-bold mb-1">Citas pendientes</p>
             <p className="text-4xl font-bold text-text-main">0</p>
           </div>
           <div className="card p-4 flex flex-col justify-center">
-            <p className="text-text-muted text-xs font-bold uppercase tracking-widest mb-1">Servicios Activos</p>
+            <p className="text-text-muted text-xs font-bold mb-1">Servicios activos</p>
             <p className="text-2xl font-bold text-text-main">0</p>
           </div>
         </div>

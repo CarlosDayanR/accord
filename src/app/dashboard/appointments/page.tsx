@@ -15,6 +15,7 @@ interface Appointment {
   client_phone: string | null;
   appointment_datetime: string;
   status: string;
+  notes: string | null;
   services: {
     name: string;
   };
@@ -33,6 +34,7 @@ export default function AppointmentsPage() {
     service_id: "",
     appointment_date: "",
     appointment_time: "",
+    notes: "",
   });
 
   const fetchData = async () => {
@@ -58,7 +60,7 @@ export default function AppointmentsPage() {
     fetchData();
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -86,6 +88,7 @@ export default function AppointmentsPage() {
           client_phone: formData.client_phone,
           service_id: formData.service_id,
           appointment_datetime: fullDatetime,
+          notes: formData.notes,
         }),
       });
 
@@ -102,6 +105,7 @@ export default function AppointmentsPage() {
         service_id: "",
         appointment_date: "",
         appointment_time: "",
+        notes: "",
       });
     } catch (err: any) {
       setError(err.message);
@@ -216,6 +220,17 @@ export default function AppointmentsPage() {
                 />
               </div>
 
+              <div className="space-y-1">
+                <label className="input-label">Notas internas (Opcional)</label>
+                <textarea
+                  name="notes"
+                  value={formData.notes}
+                  onChange={handleChange}
+                  className="input-field min-h-[100px] resize-none"
+                  placeholder="Ej: Dejó anticipo de $150, traer cartilla de vacunación, etc."
+                />
+              </div>
+
               {error && (
                 <div className="text-xs text-red-500 bg-red-500/10 p-2 rounded border border-red-500/20 italic">
                   {error}
@@ -238,7 +253,7 @@ export default function AppointmentsPage() {
           <div className="card !p-0 overflow-hidden shadow-sm">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
-                <thead className="bg-bg-surface border-b border-surface-border text-text-muted uppercase text-[10px] font-bold tracking-wider">
+                <thead className="bg-bg-surface border-b border-surface-border text-text-muted text-xs font-bold">
                   <tr>
                     <th className="px-6 py-4">Fecha y Hora</th>
                     <th className="px-6 py-4">Cliente</th>
@@ -267,7 +282,7 @@ export default function AppointmentsPage() {
                           <div className="font-bold text-text-main">
                             {format(new Date(appt.appointment_datetime), "dd MMM, yyyy", { locale: es })}
                           </div>
-                          <div className="text-xs text-text-muted uppercase tracking-wide font-medium">
+                          <div className="text-xs text-text-muted font-medium">
                             {format(new Date(appt.appointment_datetime), "hh:mm a", { locale: es })}
                           </div>
                         </td>
@@ -284,17 +299,17 @@ export default function AppointmentsPage() {
                           <select
                             value={appt.status}
                             onChange={(e) => handleStatusUpdate(appt.id, e.target.value)}
-                            className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider bg-bg-base border outline-none transition-all cursor-pointer shadow-xs ${
-                              appt.status === "completed" ? "text-emerald-600 border-emerald-500/30 hover:border-emerald-500/50" :
-                              appt.status === "cancelled" ? "text-red-500 border-red-500/30 hover:border-red-500/50" :
-                              appt.status === "approved" ? "text-brand-blue border-brand-blue/30 hover:border-brand-blue/50" :
-                              "text-amber-500 border-amber-500/30 hover:border-amber-500/50"
+                            className={`px-3 py-1.5 rounded-full text-sm font-bold border outline-none transition-all cursor-pointer shadow-md ${
+                              appt.status === "completed" ? "text-white bg-brand-blue border-brand-blue/90 shadow-[0_4px_12px_rgba(46,167,237,0.25)]" :
+                              appt.status === "cancelled" ? "text-white bg-red-500 border-red-400 shadow-[0_4px_12px_rgba(239,68,68,0.25)]" :
+                              appt.status === "approved" ? "text-white bg-emerald-50 border-emerald-400 shadow-[0_4px_12px_rgba(16,185,129,0.25)]" :
+                              "text-white bg-amber-500 border-amber-400 shadow-[0_4px_12px_rgba(245,158,11,0.25)]"
                             }`}
                           >
-                            <option value="pending">PENDING</option>
-                            <option value="approved">APPROVED</option>
-                            <option value="completed">COMPLETED</option>
-                            <option value="cancelled">CANCELLED</option>
+                            <option value="pending" className="bg-white text-amber-700">Pendiente</option>
+                            <option value="approved" className="bg-white text-emerald-700">Confirmada</option>
+                            <option value="completed" className="bg-white text-blue-700">Completada</option>
+                            <option value="cancelled" className="bg-white text-red-700">Cancelada</option>
                           </select>
                         </td>
                         <td className="px-6 py-4">

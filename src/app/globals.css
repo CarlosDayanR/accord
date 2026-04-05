@@ -302,3 +302,25 @@ html {
 .animate-scale-in {
   animation: scaleIn 350ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
+
+/* ── Custom Scrollbar (Premium Finish) ────────────────────── */
+@media (min-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #BFDBFE; /* soft blue (blue-200) */
+    border-radius: 10px;
+    transition: background 200ms ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--brand-blue-hover);
+  }
+}
+

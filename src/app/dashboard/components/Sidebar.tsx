@@ -126,7 +126,7 @@ export default function Sidebar({ businessName, logoUrl, userName, hasBusiness }
             <img src={logoUrl} alt={businessName} className={`rounded-xl object-cover border border-slate-200 shadow-sm shrink-0 transition-all ${isCollapsed ? "w-10 h-10" : "w-10 h-10"}`} />
           ) : (
             <div className={`bg-white rounded-xl border border-slate-200 flex items-center justify-center shrink-0 shadow-sm transition-all ${isCollapsed ? "w-10 h-10" : "w-10 h-10"}`}>
-              <span className="text-sm font-bold text-brand-blue uppercase">{businessName[0]}</span>
+              <span className="text-sm font-bold text-brand-blue">{businessName[0].toUpperCase()}</span>
             </div>
           )}
           {!isCollapsed && (
@@ -136,7 +136,7 @@ export default function Sidebar({ businessName, logoUrl, userName, hasBusiness }
                   {businessName}
                 </h1>
               </Link>
-              <p className="text-[10px] text-text-muted uppercase font-bold tracking-widest leading-none mt-0.5">
+              <p className="text-[10px] text-text-muted font-bold leading-none mt-0.5">
                 {hasBusiness ? 'Dashboard' : 'Pendiente'}
               </p>
             </div>
@@ -146,7 +146,7 @@ export default function Sidebar({ businessName, logoUrl, userName, hasBusiness }
         {/* Pending Step Notification */}
         {!hasBusiness && !isCollapsed && (
           <div className="bg-blue-50 border border-blue-100 p-3 rounded-xl mx-5 mt-6 shadow-sm">
-            <p className="text-[10px] text-brand-blue font-bold uppercase tracking-widest mb-1.5 leading-none">Paso Pendiente</p>
+            <p className="text-[10px] text-brand-blue font-bold mb-1.5 leading-none">Paso pendiente</p>
             <Link 
               href="/dashboard"
               className="text-[11px] text-brand-blue font-bold hover:underline flex items-center gap-1 transition-colors"
@@ -203,7 +203,7 @@ export default function Sidebar({ businessName, logoUrl, userName, hasBusiness }
 
           {!isCollapsed && (
             <div className="p-3.5 bg-white border border-slate-100 rounded-2xl shadow-sm flex flex-col relative group">
-              <p className="text-[10px] text-text-muted font-bold uppercase tracking-wider mb-0.5">Usuario</p>
+              <p className="text-[10px] text-text-muted font-bold mb-0.5">Usuario</p>
               <p className="text-sm font-semibold text-text-main truncate" title={userName}>{userName}</p>
             </div>
           )}
@@ -223,7 +223,7 @@ export default function Sidebar({ businessName, logoUrl, userName, hasBusiness }
             <svg className={`w-5 h-5 shrink-0 ${!isCollapsed && "group-hover:translate-x-1 group-active:translate-x-1 transition-transform"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
             </svg>
-            {!isCollapsed && <span className="text-[11px] font-bold uppercase tracking-widest">Cerrar sesión</span>}
+            {!isCollapsed && <span className="text-[11px] font-bold">Cerrar sesión</span>}
           </button>
         </div>
 

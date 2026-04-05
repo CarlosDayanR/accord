@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { business_id, service_id, client_name, client_phone, appointment_datetime } = body;
+    const { business_id, service_id, client_name, client_phone, appointment_datetime, notes } = body;
 
     // Basic field validation
     if (!business_id || !service_id || !client_name || !appointment_datetime) {
@@ -40,6 +40,7 @@ export async function POST(request: Request) {
         service_id: Number(service_id),
         client_name,
         client_phone: client_phone || null,
+        notes: notes || null,
         appointment_datetime: selectedDate,
         source: "web",
         status: "pending",

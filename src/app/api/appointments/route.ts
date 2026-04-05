@@ -54,7 +54,7 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { client_name, client_phone, service_id, appointment_datetime } = body;
+    const { client_name, client_phone, service_id, appointment_datetime, notes } = body;
 
     if (!client_name || !service_id || !appointment_datetime) {
       return NextResponse.json({ error: "Faltan datos obligatorios" }, { status: 400 });
@@ -78,6 +78,7 @@ export async function POST(request: Request) {
         service_id: Number(service_id),
         client_name,
         client_phone: client_phone || null,
+        notes: notes || null,
         appointment_datetime: selectedDate,
         source: "manual",
         status: "approved",

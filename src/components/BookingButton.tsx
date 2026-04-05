@@ -20,9 +20,10 @@ export default function BookingButton({ className, serviceId, serviceName, busin
     appointment_datetime: "",
     client_name: "",
     client_phone: "",
+    notes: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
@@ -51,6 +52,7 @@ export default function BookingButton({ className, serviceId, serviceName, busin
       appointment_datetime: "",
       client_name: "",
       client_phone: "",
+      notes: "",
     });
   };
 
@@ -184,6 +186,19 @@ export default function BookingButton({ className, serviceId, serviceName, busin
                       onChange={handleChange}
                       className="input-field !rounded-2xl"
                     />
+
+                    <div className="space-y-1.5 pt-2">
+                      <label htmlFor="notes" className="text-sm font-semibold text-text-main ml-1">Notas adicionales (Opcional)</label>
+                      <textarea
+                        id="notes"
+                        name="notes"
+                        placeholder="Ej. Es mi primera vez, tengo alguna duda, etc."
+                        rows={3}
+                        value={formData.notes}
+                        onChange={handleChange}
+                        className="input-field !rounded-2xl resize-none"
+                      />
+                    </div>
                   </div>
 
                   {error && <p className="text-xs text-red-500 italic pb-2">Error: {error}</p>}

@@ -38,7 +38,7 @@ export default async function DashboardLayout({
             userName={session.user.name || "Usuario"} 
             hasBusiness={!!business}
           />
-          <main className="flex-1 overflow-auto animate-in fade-in slide-in-from-bottom-4 duration-700 pt-6 md:pt-0 pb-16">
+          <main className="flex-1 overflow-auto animate-in fade-in slide-in-from-bottom-4 duration-700 pt-6 md:pt-0 pb-16 pr-4">
             {children}
           </main>
         </div>
