@@ -82,7 +82,7 @@ export default function TodayAppointmentsList({ appointments: initialAppointment
                 
                 {/* Derecha: Píldora y Acción */}
                 <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4 mt-2 sm:mt-0 pt-4 sm:pt-0 border-t sm:border-0 border-slate-50">
-                  <span className={`px-4 py-1.5 rounded-full text-sm font-bold border transition-all ${getStatusStyles(appt.status)}`}>
+                  <span className={`w-28 text-center px-2 py-1.5 rounded-full text-xs font-bold border transition-all ${getStatusStyles(appt.status)}`}>
                     {displayStatus}
                   </span>
                   <button className="p-2 text-gray-400 group-hover:text-brand-blue group-hover:bg-brand-blue/5 transition-colors rounded-lg outline-none">

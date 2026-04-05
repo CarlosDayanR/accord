@@ -185,11 +185,31 @@ export default function AppointmentDetailsSlideOver({ isOpen, onClose, appointme
         {/* Sec 4: Bottom Actions */}
         {appointment && (
           <div className="p-6 border-t border-slate-100 bg-slate-50 mt-auto flex flex-col gap-3 shrink-0">
+            {currentStatus === 'pending' && (
+              <button 
+                onClick={() => handleUpdateStatus('approved')}
+                disabled={!!isUpdating}
+                className="w-full py-2 bg-emerald-500 hover:bg-emerald-600 text-white font-bold !text-xs rounded-xl shadow-[0_8px_20px_rgba(16,185,129,0.3)] transition-all flex items-center justify-center gap-2 disabled:opacity-70"
+              >
+                {isUpdating === 'approved' ? (
+                  <>
+                    <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
+                    Confirmando...
+                  </>
+                ) : (
+                  'Confirmar cita'
+                )}
+              </button>
+            )}
+
             {currentStatus !== 'completed' && currentStatus !== 'cancelled' && (
               <button 
                 onClick={() => handleUpdateStatus('completed')}
                 disabled={!!isUpdating}
-                className="btn-primary w-full disabled:opacity-70 flex items-center justify-center gap-2"
+                className="btn-primary w-full !py-2 !text-xs disabled:opacity-70 flex items-center justify-center gap-2"
               >
                 {isUpdating === 'completed' ? (
                   <>
@@ -206,17 +226,12 @@ export default function AppointmentDetailsSlideOver({ isOpen, onClose, appointme
               <button 
                 onClick={() => handleUpdateStatus('cancelled')}
                 disabled={!!isUpdating}
-                className="w-full py-2.5 text-red-500 font-bold text-xs transition-all duration-300 rounded-xl hover:bg-white active:bg-white hover:text-red-500 active:text-red-500 hover:shadow-[0_4px_15px_rgba(239,68,68,0.15)] active:shadow-[0_4px_15px_rgba(239,68,68,0.15)] hover:-translate-y-px active:-translate-y-px flex items-center justify-center gap-2 disabled:opacity-50"
+                className="w-full py-2 text-red-500 font-bold !text-xs transition-all duration-300 rounded-xl hover:bg-white active:bg-white hover:text-red-500 active:text-red-500 hover:shadow-[0_4px_15px_rgba(239,68,68,0.15)] active:shadow-[0_4px_15px_rgba(239,68,68,0.15)] hover:-translate-y-px active:-translate-y-px flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 {isUpdating === 'cancelled' ? (
                   'Cancelando...'
                 ) : (
-                  <>
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                    Cancelar cita
-                  </>
+                  'Cancelar cita'
                 )}
               </button>
             )}

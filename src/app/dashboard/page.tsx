@@ -49,12 +49,14 @@ export default async function DashboardPage() {
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
 
+    // Format: Sábado 04 de abril de 2026
     const todayDateString = new Intl.DateTimeFormat("es-ES", {
       weekday: "long",
-      day: "numeric",
-      month: "long"
+      day: "2-digit",
+      month: "long",
+      year: "numeric"
     }).format(today);
-    formattedDate = todayDateString.charAt(0).toUpperCase() + todayDateString.slice(1);
+    formattedDate = todayDateString.charAt(0).toUpperCase() + todayDateString.slice(1).replace(",", "");
 
     const [todayCount, pendingCount, servicesCount, totalAppts, hoursCount, appointments, todayHours] = await Promise.all([
       prisma.appointments.count({
@@ -113,18 +115,20 @@ export default async function DashboardPage() {
     stats = { todayCount, pendingCount, servicesCount, totalAppts, hoursCount };
     todayAppointments = appointments;
 
-    const formatTime = (date: Date) => {
-      const h = date.getHours();
-      const m = date.getMinutes().toString().padStart(2, '0');
-      const ampm = h >= 12 ? 'PM' : 'AM';
+    // Helper to format time correctly (using UTC part from Prisma Date objects for Time fields)
+    const formatTimeStr = (date: Date) => {
+      const timeStr = date.toISOString().substring(11, 16);
+      const [hours, minutes] = timeStr.split(":");
+      const h = parseInt(hours);
+      const ampm = h >= 12 ? "PM" : "AM";
       const h12 = h % 12 || 12;
-      return `${h12}:${m} ${ampm}`;
+      return `${h12}:${minutes} ${ampm}`;
     };
 
     if (todayHours) {
       hoursDisplay = todayHours.is_closed 
-        ? "Hoy: Cerrado" 
-        : `Hoy: ${formatTime(todayHours.open_time)} - ${formatTime(todayHours.close_time)}`;
+        ? "Cerrado" 
+        : `${formatTimeStr(todayHours.open_time)} - ${formatTimeStr(todayHours.close_time)}`;
     }
   }
 
@@ -137,29 +141,34 @@ export default async function DashboardPage() {
       ) : (
         <div className="flex flex-col gap-8">
           <div className="mb-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-slate-100 text-xs font-semibold text-brand-blue mb-4 shadow-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-brand-blue animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-slate-100 text-xs font-semibold text-brand-blue mb-4 shadow-[0_12px_45px_rgba(0,0,0,0.15)] hover:shadow-[0_15px_50px_rgba(0,0,0,0.2)] transition-shadow">
               {business.business_subcategories.name}
             </div>
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mt-4">
               <div>
-                <h1 className="text-4xl font-bold mb-2 tracking-tight text-text-main">Bienvenido, {business.name}</h1>
+                <h1 className="text-2xl md:text-3xl font-bold mb-2 tracking-tight text-text-main">Bienvenido, {business.name}</h1>
                 <p className="text-text-muted">Desde aquí podrás gestionar tus citas y servicios en tiempo real.</p>
               </div>
-              {hoursDisplay && (
-                <div className="flex items-center gap-2 text-sm text-text-muted bg-slate-50/50 px-3 py-1.5 rounded-lg border border-slate-100/50">
-                  <svg className="w-4 h-4 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span className="font-medium">{hoursDisplay}</span>
+              
+              <div className="flex flex-col items-end gap-2 w-full md:w-auto">
+                <div className="w-full md:w-auto bg-white px-4 py-3 rounded-xl border border-slate-100 shadow-sm flex flex-col items-start md:items-end animate-in fade-in slide-in-from-right-4 duration-700">
+                  <span className="text-sm font-medium text-text-main">{formattedDate}</span>
+                  {hoursDisplay && (
+                    <div className="flex items-center gap-1.5 text-xs text-text-muted mt-1">
+                      <svg className="w-4 h-4 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span>Horario: {hoursDisplay}</span>
+                    </div>
+                  )}
                 </div>
-              )}
+              </div>
             </div>
           </div>
 
           {/* Onboarding Nudge */}
           {(stats.servicesCount === 0 || stats.hoursCount === 0) && (
-            <div className="bg-white rounded-2xl border border-slate-100 p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-[0_6px_16px_rgba(0,0,0,0.06)] animate-in fade-in slide-in-from-top-4 duration-500">
+            <div className="bg-white rounded-2xl border border-slate-100 p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-[0_12px_45px_rgba(0,0,0,0.12)] animate-in fade-in slide-in-from-top-4 duration-500">
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-full bg-brand-blue/10 flex items-center justify-center shrink-0 border border-brand-blue/20">
                   <svg className="w-5 h-5 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -189,17 +198,17 @@ export default async function DashboardPage() {
           {/* Tarjetas de Estadísticas */}
           <div className="px-4 py-8 sm:px-12">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Link href="/dashboard/appointments" className="card card-interactive p-6 group hover:-translate-y-1 hover:shadow-md transition-all duration-300">
+              <Link href="/dashboard/appointments" className="card card-interactive p-6 group hover:-translate-y-1.5 hover:shadow-[0_12px_45px_rgba(0,0,0,0.15)] transition-all duration-300">
                 <p className="text-text-muted text-sm font-bold mb-1">Citas hoy</p>
                 <p className="text-4xl font-bold text-text-main group-hover:text-brand-blue transition-colors origin-left">{stats.todayCount}</p>
               </Link>
-              <Link href="/dashboard/appointments" className="card card-interactive p-6 group hover:-translate-y-1 hover:shadow-md transition-all duration-300">
+              <Link href="/dashboard/appointments" className="card card-interactive p-6 group hover:-translate-y-1.5 hover:shadow-[0_12px_45px_rgba(0,0,0,0.15)] transition-all duration-300">
                 <p className="text-text-muted text-sm font-bold mb-1">Citas pendientes</p>
                 <p className={`text-4xl font-bold transition-colors origin-left ${stats.pendingCount > 0 ? 'text-brand-blue group-hover:text-brand-blue-hover' : 'text-text-muted group-hover:text-text-main'}`}>
                   {stats.pendingCount}
                 </p>
               </Link>
-              <Link href="/dashboard/services" className="card card-interactive p-6 flex flex-col justify-center group hover:-translate-y-1 hover:shadow-md transition-all duration-300">
+              <Link href="/dashboard/services" className="card card-interactive p-6 flex flex-col justify-center group hover:-translate-y-1.5 hover:shadow-[0_12px_45px_rgba(0,0,0,0.15)] transition-all duration-300">
                 <p className="text-text-muted text-sm font-bold mb-1">Servicios activos</p>
                 <p className="text-3xl font-bold text-text-main group-hover:text-brand-blue transition-colors origin-left">{stats.servicesCount}</p>
               </Link>
@@ -210,7 +219,6 @@ export default async function DashboardPage() {
           <div className="mt-8">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-text-main tracking-tight">Citas de hoy</h2>
-              <p className="text-text-muted capitalize">{formattedDate}</p>
             </div>
 
             <TodayAppointmentsList appointments={todayAppointments} businessSlug={business.slug} />
